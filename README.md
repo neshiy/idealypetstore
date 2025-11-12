@@ -93,12 +93,6 @@ Format code:
 npm run format
 ```
 
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API.
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Utility-first CSS framework.
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/) - TypeScript documentation.
-
-## Deploy on Vercel
+## Deployed on Vercel
 
 https://idealypetstore.vercel.app/
