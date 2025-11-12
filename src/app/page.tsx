@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Gravitas_One } from "next/font/google";
 import { Poppins } from "next/font/google";
 
@@ -12,6 +12,8 @@ const pawPatternStyle = {
   backgroundRepeat: 'repeat',
   backgroundSize: '550px',
   backgroundPosition: 'center',
+  backdropFilter: 'blur(16px)', // more blur
+  WebkitBackdropFilter: 'blur(16px)', // for Safari
 } as const;
 
 const services = [
@@ -45,6 +47,7 @@ const services = [
 
 export default function Home() {
   const servicesRef = useRef<HTMLDivElement>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollServices = (direction: "left" | "right") => {
     const container = servicesRef.current;
@@ -66,7 +69,7 @@ export default function Home() {
             <div className="text-2xl font-bold text-[#48065c]">IDEALY PET STORE</div>
 
             {/* Navigation Links */}
-            <ul className="flex gap-8">
+            <ul className="hidden md:flex gap-8">
               <li>
                 <a
                   href="#hero"
@@ -114,48 +117,112 @@ export default function Home() {
               </li>
             </ul>
 
-            {/* Call Button */}
+            {/* Call Button (hidden on small screens) */}
             <a
               href="tel:+11234567890"
-              className="px-6 py-2 bg-[#48065c] text-white font-semibold rounded-lg shadow-md hover:bg-[#48065c]"
+              className="hidden md:inline-block px-6 py-2 bg-[#48065c] text-white font-semibold rounded-lg shadow-md hover:bg-[#48065c]"
             >
-              Call: +1 (123) 456-7890
+              Call: +94 77 978 9288
             </a>
+
+            {/* Mobile hamburger - purple, right side (visible on small screens) */}
+            <button
+              type="button"
+              aria-label="Open menu"
+              className="md:hidden ml-3 p-2 rounded bg-[#48065c] text-white"
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </nav>
 
+        {/* Mobile menu overlay (small screens) */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 md:hidden">
+            <div className="absolute inset-0 bg-black/40" onClick={() => setMobileMenuOpen(false)} />
+            <div className="absolute right-0 top-0 h-full w-72 bg-white shadow-lg p-6 flex flex-col">
+              <div className="flex items-center justify-between">
+                <div className="text-lg font-semibold text-[#48065c]">Menu</div>
+                <button
+                  aria-label="Close menu"
+                  className="p-2 rounded bg-[#48065c] text-white"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+              <nav className="mt-6 flex flex-col gap-4">
+                <a href="#hero" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Home</a>
+                <a href="#services" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Services</a>
+                <a href="#about" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>About Us</a>
+                <a href="#contact" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+                <a href="#faq" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+              </nav>
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
-        <main id="hero" className="flex flex-1 items-center justify-center px-8 py-16" style={{ backgroundColor: '#8965df' }}>
-          <div className="flex flex-col-reverse sm:flex-row items-center gap-8">
+        <main id="hero" className="flex flex-1 items-center justify-center px-4 sm:px-8 py-12 sm:py-16" style={{ backgroundColor: '#8965df' }}>
+          <div className="flex flex-col-reverse md:flex-row items-center gap-6 md:gap-8 w-full max-w-7xl">
             {/* Tagline */}
             <div className="text-center sm:text-left">
-              <h1 className={`text-[50px] font-bold leading-tight text-black dark:text-white ${gravitasOne.className}`}>
+              <h1 className={`text-2xl sm:text-3xl md:text-[50px] font-bold leading-tight text-black dark:text-white ${gravitasOne.className}`}>
                 Pawsitively <br /> Everything Your Pet Needs
               </h1>
-              <p className={`mt-4 text-lg text-white ${poppins.className}`}>
+              <p className={`mt-3 sm:mt-4 text-base sm:text-lg text-white ${poppins.className}`}>
                 Discover the best products and services for your furry friends.
               </p>
-              <button className="mt-6 px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600">
-                Call NOW
-              </button>
+              <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-3 items-center">
+                {/* On small/tablet show the number; on md+ show 'Call NOW' */}
+                <a
+                  href="tel:+94779789288"
+                  aria-label="Call +94 77 978 9288"
+                  className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 inline-flex items-center justify-center md:hidden"
+                >
+                  +94 77 978 9288
+                </a>
+                <a
+                  href="tel:+94779789288"
+                  aria-label="Call now"
+                  className="hidden md:inline-flex px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 items-center justify-center"
+                >
+                  Call NOW
+                </a>
+                <a
+                  href="/shop"
+                  className="px-6 py-3 bg-[#48065c] text-white font-semibold rounded-lg shadow-md hover:bg-[#6d2c91] transition-colors text-center"
+                  style={{ minWidth: '180px' }}
+                >
+                  Direct to Online Shop
+                </a>
+              </div>
             </div>
 
             {/* Dog Image */}
-            <div>
+            <div className="w-full max-w-[320px] sm:max-w-[420px] md:max-w-[600px]">
               <Image
                 src="/pup1.jpg"
                 alt="Happy puppy"
                 width={600}
                 height={600}
-                className="rounded-lg"
+                className="rounded-lg w-full h-auto object-cover"
               />
             </div>
           </div>
         </main>
 
         {/* Services Section */}
-        <section id="services" className="bg-white py-16" style={pawPatternStyle}>
-          <div className="max-w-7xl mx-auto px-8">
+        <section id="services" className="bg-white py-12 md:py-16 relative overflow-hidden">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 z-0"
+            style={{ ...pawPatternStyle, filter: 'blur(2px)', opacity: 0.7 }}
+          />
+          <div className="relative z-10 max-w-7xl mx-auto px-8">
             <div className="flex items-center justify-between gap-4">
               <h2 className={`${gravitasOne.className} text-4xl font-bold text-[#48065c]`}>Our Services</h2>
               <div className="hidden md:flex gap-3">
@@ -178,7 +245,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative mt-10">
+            <div className="relative mt-8">
               <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-16 bg-linear-to-r from-white to-transparent md:block" />
               <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-linear-to-l from-white to-transparent md:block" />
 
@@ -220,78 +287,67 @@ export default function Home() {
         </section>
 
         {/* About Us Section */}
-        <section id="about" className="bg-purple-500 py-9 text-center">
+        <section id="about" className="bg-purple-500 py-8 text-center">
           <h2 className={`text-3xl font-bold text-white ${gravitasOne.className}`}>
             Built By Pet Lovers, For Pet Lovers
           </h2>
         </section>
 
-  <section className="bg-white py-16">
-          <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* Pet Images */}
-            <div className="flex gap-4">
-              <Image
-                src="/pets1.png"
-                alt="Pet 1"
-                width={300}
-                height={300}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-
-            {/* About Us Details */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-800">Quality First</h3>
-              <p className="mt-2 text-gray-600">
-                We only stock products we'd give to our own pets. No compromises on
-                ingredients, safety, or ethical sourcing.
-              </p>
-
-              <h3 className="mt-6 text-2xl font-bold text-gray-800">
-                Expert Curation
-              </h3>
-              <p className="mt-2 text-gray-600">
-                We don't sell everything; we sell the best of everything. Our team
-                researches and vets every brand.
-              </p>
-
-              <h3 className="mt-6 text-2xl font-bold text-gray-800">
-                Community & Care
-              </h3>
-              <p className="mt-2 text-gray-600">
-                We believe in supporting local shelters and fostering a community
-                where every pet parent feels welcome and supported.
-              </p>
-
-              <h3 className="mt-6 text-2xl font-bold text-gray-800">
-                Sustainable Paws
-              </h3>
-              <p className="mt-2 text-gray-600">
-                Committed to offering eco-friendly products and minimizing our
-                environmental footprint for a better planet.
-              </p>
+        <section className="bg-white py-10 md:py-16">
+          <div className="max-w-7xl mx-auto px-8">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+              {/* Left Details */}
+              <div className="flex flex-col gap-8 flex-1 max-w-xs">
+                <div>
+                  <h3 className={`text-2xl md:text-3xl font-bold text-gray-800 ${poppins.className}`}>Quality First</h3>
+                  <p className={`mt-2 text-sm text-gray-600 ${poppins.className}`}>We only stock products we'd give to our own pets. No compromises on ingredients, safety, or ethical sourcing.</p>
+                </div>
+                <div>
+                  <h3 className={`text-2xl md:text-3xl font-bold text-gray-800 ${poppins.className}`}>Expert Curation</h3>
+                  <p className={`mt-2 text-sm text-gray-600 ${poppins.className}`}>We don't sell everything; we sell the best of everything. Our team researches and vets every brand.</p>
+                </div>
+              </div>
+              {/* Center Dog Image */}
+              <div className="flex justify-center items-center shrink-0">
+                <Image
+                  src="/pets1.png"
+                  alt="Pet 1"
+                  width={300}
+                  height={300}
+                  className="rounded-lg"
+                  style={{ boxShadow: 'none', border: 'none' }}
+                />
+              </div>
+              {/* Right Details */}
+              <div className="flex flex-col gap-8 flex-1 max-w-xs">
+                <div>
+                  <h3 className={`text-2xl md:text-3xl font-bold text-gray-800 ${poppins.className}`}>Community & Care</h3>
+                  <p className={`mt-2 text-sm text-gray-600 ${poppins.className}`}>We believe in supporting local shelters and fostering a community where every pet parent feels welcome and supported.</p>
+                </div>
+                <div>
+                  <h3 className={`text-2xl md:text-3xl font-bold text-gray-800 ${poppins.className}`}>Sustainable Paws</h3>
+                  <p className={`mt-2 text-sm text-gray-600 ${poppins.className}`}>Committed to offering eco-friendly products and minimizing our environmental footprint for a better planet.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-purple-500 py-16">
+        <section className="bg-purple-500 py-12 md:py-16">
           <div className="max-w-7xl mx-auto px-8 text-center">
             <h2 className={`${gravitasOne.className} text-4xl md:text-5xl font-bold text-white`}>Our Impact So far:</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm">
-                <h3 className="text-3xl font-extrabold text-white">
-                  15,000+ Happy Paws Served
-                </h3>
+              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm flex flex-col items-center">
+                <h3 className="text-5xl font-extrabold text-white leading-tight">15,000+</h3>
+                <span className="mt-1 text-lg font-semibold text-white text-center">Happy Paws Served</span>
               </div>
-              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm">
-                <h3 className="text-3xl font-extrabold text-white">
-                  200+ Vet-Approved Products Stocked
-                </h3>
+              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm flex flex-col items-center">
+                <h3 className="text-5xl font-extrabold text-white leading-tight">200+</h3>
+                <span className="mt-1 text-lg font-semibold text-white text-center">Vet-Approved Products Stocked</span>
               </div>
-              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm">
-                <h3 className="text-3xl font-extrabold text-white">
-                  $100,000 Donated to Local Rescues Annually
-                </h3>
+              <div className="p-6 bg-white/20 rounded-xl shadow-lg border border-white/30 backdrop-blur-sm flex flex-col items-center">
+                <h3 className="text-5xl font-extrabold text-white leading-tight">$100,000</h3>
+                <span className="mt-1 text-lg font-semibold text-white text-center">Donated to Local Rescues Annually</span>
               </div>
             </div>
             <p className={`${poppins.className} mt-8 text-lg text-white`}>
@@ -303,67 +359,72 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="bg-gray-100 py-16">
-          <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 gap-10 md:grid-cols-2">
-            <div>
-              <h2 className={`${gravitasOne.className} text-4xl md:text-5xl font-bold text-purple-900`}>
+        <section id="contact" className="bg-gray-100 py-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
+            <div className="flex flex-col justify-center">
+              <h2 className={`${gravitasOne.className} text-3xl md:text-4xl font-bold text-purple-900`}>
                 Got a Question? We'd Love to Chat!
               </h2>
-              <p className={`${poppins.className} mt-4 text-lg text-gray-600`}>
+              <p className={`${poppins.className} mt-3 text-base text-gray-600`}>
                 We will contact you as soon as possible.
               </p>
 
-              <form className="mt-8 space-y-6">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <form className="mt-6 space-y-4">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <input
                     type="text"
                     placeholder="First Name"
-                    className="w-full px-4 py-3 rounded-lg border border-white/30 bg-white/20 text-gray-800 placeholder-gray-500 backdrop-blur-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 placeholder-gray-500 shadow focus:outline-none focus:ring-2 focus:ring-orange-300 text-base"
                   />
                   <input
                     type="text"
                     placeholder="Last Name"
-                    className="w-full px-4 py-3 rounded-lg border border-white/30 bg-white/20 text-gray-800 placeholder-gray-500 backdrop-blur-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 placeholder-gray-500 shadow focus:outline-none focus:ring-2 focus:ring-orange-300 text-base"
                   />
                 </div>
                 <div>
                   <input
                     type="email"
                     placeholder="Email"
-                    className="w-full px-4 py-3 rounded-lg border border-white/30 bg-white/20 text-gray-800 placeholder-gray-500 backdrop-blur-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 placeholder-gray-500 shadow focus:outline-none focus:ring-2 focus:ring-orange-300 text-base"
                   />
                 </div>
                 <div>
                   <input
                     type="text"
                     placeholder="Phone Number"
-                    className="w-full px-4 py-3 rounded-lg border border-white/30 bg-white/20 text-gray-800 placeholder-gray-500 backdrop-blur-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-300"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-800 placeholder-gray-500 shadow focus:outline-none focus:ring-2 focus:ring-orange-300 text-base"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-200 hover:bg-orange-600"
+                  className="w-full px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-200 hover:bg-orange-600 text-base"
                 >
                   Submit
                 </button>
               </form>
             </div>
 
-            <div className="w-full h-80">
+            <div className="w-full flex items-center">
               <iframe
                 title="IDEALY PET STORE Location"
                 src="https://www.google.com/maps?q=7.4217,80.3297&z=14&output=embed"
                 allowFullScreen
                 loading="lazy"
-                className="w-full h-full rounded-lg border-0 shadow-md"
+                className="w-full h-56 sm:h-72 md:h-full rounded-lg border-0 shadow-md"
               />
             </div>
           </div>
         </section>
 
         {/* FAQ Section */}
-  <section id="faq" className="bg-white py-16" style={pawPatternStyle}>
-          <div className="max-w-4xl mx-auto px-8">
+        <section id="faq" className="bg-white py-16 relative overflow-hidden">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 z-0"
+            style={{ ...pawPatternStyle, filter: 'blur(2px)', opacity: 0.7 }}
+          />
+          <div className="relative z-10 max-w-4xl mx-auto px-8">
             <h2 className="text-3xl font-bold text-center text-gray-800">
               Frequently Asked Questions
             </h2>
@@ -412,41 +473,48 @@ export default function Home() {
         </section>
 
         {/* Footer Section */}
-        <footer className="bg-purple-500 py-8 text-white">
-          <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <footer className="bg-purple-500 py-4 text-white">
+          <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Left Side */}
             <div>
-              <h3 className="text-2xl font-bold">IDEALY PET STORE</h3>
-              <p className="mt-2 text-lg">Built By Pet Lovers, For Pet Lovers</p>
+              <h3 className="text-3xl font-extrabold tracking-tight">IDEALY PET STORE</h3>
+              <p className="mt-1 text-xs text-white/80">Built By Pet Lovers, For Pet Lovers</p>
+              <p className="mt-1 text-[11px] text-white/60">&copy; {new Date().getFullYear()} IDEALY PET STORE. All rights reserved.</p>
             </div>
 
             {/* Right Side */}
-            <div>
-              <p className="text-lg">
-                <strong>Phone:</strong> +94 779789288
-              </p>
-              <p className="text-lg">
-                <strong>Email:</strong> info@idealypetstore.com
-              </p>
-              <p className="text-lg">
-                <strong>Address:</strong> 123 Pet Lane, Petville, PA 12345
-              </p>
-
-              <div className="mt-4 flex gap-4">
+            <div className="flex flex-col md:items-end gap-1 text-right">
+              <div className="flex flex-col md:items-end gap-0.5">
+                <span className="text-xs font-semibold">Contact</span>
+                <a href="tel:+94779789288" className="text-sm hover:underline transition-colors">+94 779789288</a>
+              </div>
+              <div className="flex flex-col md:items-end gap-0.5 mt-1">
+                <span className="text-xs font-semibold">Email</span>
+                <a href="mailto:info@idealypetstore.com" className="text-sm hover:underline transition-colors">info@idealypetstore.com</a>
+              </div>
+              <div className="flex flex-col md:items-end gap-0.5 mt-1">
+                <span className="text-xs font-semibold">Address</span>
+                <span className="text-sm">123 Pet Lane, Petville, PA 12345</span>
+              </div>
+              <div className="mt-2 flex gap-2 justify-end">
                 <a
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline"
+                  className="hover:underline text-base transition-colors"
+                  aria-label="Facebook"
                 >
+                  <span className="sr-only">Facebook</span>
                   Facebook
                 </a>
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline"
+                  className="hover:underline text-base transition-colors"
+                  aria-label="Instagram"
                 >
+                  <span className="sr-only">Instagram</span>
                   Instagram
                 </a>
               </div>
