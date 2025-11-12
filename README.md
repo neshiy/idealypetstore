@@ -1,33 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IDEALY PET STORE
+
+A modern, responsive website for IDEALY PET STORE, showcasing pet products and services with a clean, pet-themed design. Built for pet lovers, by pet lovers.
+
+## Description
+
+IDEALY PET STORE is a comprehensive online platform that connects pet parents with premium pet products and services. The website features:
+
+- **Hero Section**: Eye-catching introduction with call-to-action buttons
+- **Services**: Overview of delivery, subscriptions, guarantees, consultations, and expert advice
+- **About Us**: Company values, quality focus, expert curation, community care, and sustainability
+- **Impact**: Statistics on happy paws served, products stocked, and donations
+- **Contact**: Contact form and embedded map for inquiries
+- **FAQ**: Frequently asked questions about products and services
+- **Footer**: Contact information, social links, and copyright
+
+The site is fully responsive, optimized for mobile and tablet devices, with a modern hamburger menu for navigation.
+
+## Technology Stack
+
+- **Framework**: Next.js 16.0.0 (React-based framework for server-side rendering and static site generation)
+- **Language**: TypeScript (for type safety and better development experience)
+- **Styling**: Tailwind CSS v4 (utility-first CSS framework for rapid UI development)
+- **Fonts**: Gravitas One and Poppins (Google Fonts for typography)
+- **Linting/Formatting**: Biome (fast, modern linter and formatter)
+- **Images**: Next.js Image component (optimized image loading and performance)
+- **Icons**: SVG icons for interactive elements
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (version 18 or higher recommended)
+- npm, yarn, pnpm, or bun package manager
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/neshiy/idealypetstore.git
+   cd idealypetstore
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+The page auto-updates as you edit the file.
+
+### Build for Production
+
+To build the application for production:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To start the production server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Linting and Formatting
+
+Run linting:
+```bash
+npm run lint
+```
+
+Format code:
+```bash
+npm run format
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API.
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Utility-first CSS framework.
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/) - TypeScript documentation.
 
 ## Deploy on Vercel
 
