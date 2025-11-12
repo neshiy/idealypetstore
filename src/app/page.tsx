@@ -129,10 +129,10 @@ export default function Home() {
             <button
               type="button"
               aria-label="Open menu"
-              className="md:hidden ml-3 p-2 rounded bg-[#48065c] text-white"
+              className="md:hidden ml-3 p-3 rounded-full bg-[#48065c] text-white shadow-lg hover:bg-[#6d2c91] transition-all duration-200 hover:scale-105"
               onClick={() => setMobileMenuOpen(true)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -142,24 +142,26 @@ export default function Home() {
         {/* Mobile menu overlay (small screens) */}
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-50 md:hidden">
-            <div className="absolute inset-0 bg-black/40" onClick={() => setMobileMenuOpen(false)} />
-            <div className="absolute right-0 top-0 h-full w-72 bg-white shadow-lg p-6 flex flex-col">
-              <div className="flex items-center justify-between">
-                <div className="text-lg font-semibold text-[#48065c]">Menu</div>
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+            <div className="absolute right-0 top-0 h-full w-80 bg-white/95 backdrop-blur-lg shadow-2xl p-6 flex flex-col rounded-l-2xl">
+              <div className="flex items-center justify-between mb-8">
+                <div className="text-xl font-bold text-[#48065c]">Menu</div>
                 <button
                   aria-label="Close menu"
-                  className="p-2 rounded bg-[#48065c] text-white"
+                  className="p-2 rounded-full bg-[#48065c] text-white hover:bg-[#6d2c91] transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  ×
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
-              <nav className="mt-6 flex flex-col gap-4">
-                <a href="#hero" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Home</a>
-                <a href="#services" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Services</a>
-                <a href="#about" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>About Us</a>
-                <a href="#contact" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>Contact</a>
-                <a href="#faq" className="text-lg text-[#48065c]" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+              <nav className="flex flex-col items-center gap-6">
+                <a href="#hero" className="text-xl font-medium text-[#48065c] hover:text-[#6d2c91] hover:bg-[#48065c]/10 px-4 py-2 rounded-lg transition-all duration-200" onClick={() => setMobileMenuOpen(false)}>Home</a>
+                <a href="#services" className="text-xl font-medium text-[#48065c] hover:text-[#6d2c91] hover:bg-[#48065c]/10 px-4 py-2 rounded-lg transition-all duration-200" onClick={() => setMobileMenuOpen(false)}>Services</a>
+                <a href="#about" className="text-xl font-medium text-[#48065c] hover:text-[#6d2c91] hover:bg-[#48065c]/10 px-4 py-2 rounded-lg transition-all duration-200" onClick={() => setMobileMenuOpen(false)}>About Us</a>
+                <a href="#contact" className="text-xl font-medium text-[#48065c] hover:text-[#6d2c91] hover:bg-[#48065c]/10 px-4 py-2 rounded-lg transition-all duration-200" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+                <a href="#faq" className="text-xl font-medium text-[#48065c] hover:text-[#6d2c91] hover:bg-[#48065c]/10 px-4 py-2 rounded-lg transition-all duration-200" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
               </nav>
             </div>
           </div>
@@ -476,14 +478,14 @@ export default function Home() {
         <footer className="bg-purple-500 py-4 text-white">
           <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Left Side */}
-            <div>
+            <div className="text-center md:text-left">
               <h3 className="text-3xl font-extrabold tracking-tight">IDEALY PET STORE</h3>
               <p className="mt-1 text-xs text-white/80">Built By Pet Lovers, For Pet Lovers</p>
               <p className="mt-1 text-[11px] text-white/60">&copy; {new Date().getFullYear()} IDEALY PET STORE. All rights reserved.</p>
             </div>
 
             {/* Right Side */}
-            <div className="flex flex-col md:items-end gap-1 text-right">
+            <div className="text-center md:text-right border-t md:border-t-0 md:border-l border-white/30 pt-4 md:pt-0 md:pl-4 flex flex-col md:items-end gap-1">
               <div className="flex flex-col md:items-end gap-0.5">
                 <span className="text-xs font-semibold">Contact</span>
                 <a href="tel:+94779789288" className="text-sm hover:underline transition-colors">+94 779789288</a>
@@ -496,7 +498,7 @@ export default function Home() {
                 <span className="text-xs font-semibold">Address</span>
                 <span className="text-sm">123 Pet Lane, Petville, PA 12345</span>
               </div>
-              <div className="mt-2 flex gap-2 justify-end">
+              <div className="mt-2 flex gap-2 justify-center md:justify-end">
                 <a
                   href="https://facebook.com"
                   target="_blank"
